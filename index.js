@@ -128,6 +128,9 @@ function promisedHandlebars (Handlebars, options) {
     if (!promisesInArgs && !promisesInHash) {
       // No promises in hash or args. Act a normal as possible.
       var result = fn.apply(_this, args)
+      if (isPromiseAlike(result)) {
+        result.promiseArgsForFailure = args;
+      }
       return isPromiseAlike(result) ? markers.asMarker(result) : result
     }
 
